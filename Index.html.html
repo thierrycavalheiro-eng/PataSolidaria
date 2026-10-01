@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Casa Patinhas · Gestão da ONG</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F6F4;--card:#fff;--ink:#12332F;--mut:#5B726E;--line:#D5E1DD;--pri:#1F6F64;--acc:#F2B632;--bad:#C8412F;--ok:#2E8B57;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1F1D;--card:#152B28;--ink:#E8F2EF;--mut:#98B3AE;--line:#27443F;--pri:#4FB5A5;--acc:#F2B632;--bad:#F07A67;--ok:#5CC48A}}
+:root[data-theme="dark"]{--bg:#0E1F1D;--card:#152B28;--ink:#E8F2EF;--mut:#98B3AE;--line:#27443F;--pri:#4FB5A5;--acc:#F2B632;--bad:#F07A67;--ok:#5CC48A}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.5}
+header{background:var(--pri);color:#fff;padding:12px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+header h1{margin:0;font-size:1.3rem;font-weight:800}
+.modes button,.tabs button{font:inherit;cursor:pointer}
+.modes button{background:transparent;color:#fff;border:1px solid #ffffff88;padding:6px 14px;border-radius:99px}
+.modes button.on{background:var(--acc);color:#12332F;border-color:var(--acc);font-weight:600}
+select,input,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;max-width:100%}
+header select{background:#ffffff22;color:#fff;border-color:#ffffff66}header option{color:#000}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding:10px 20px 0;border-bottom:1px solid var(--line);background:var(--card)}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;color:var(--mut);white-space:nowrap}
+.tabs button.on{color:var(--ink);border-color:var(--acc);font-weight:600}
+main{max-width:1100px;margin:0 auto;padding:20px}
+h2{margin:0 0 4px;font-size:1.6rem}p.sub{margin:0 0 18px;color:var(--mut)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpi b{display:block;font-size:1.9rem;font-weight:800}.kpi span{color:var(--mut);font-size:.9rem}
+.pet{cursor:pointer;padding:0;overflow:hidden}.pet .ph{height:110px;display:grid;place-items:center;font-size:3.4rem;background:var(--line)}.pet .in{padding:12px 14px}
+.pet h3{margin:0}.tag{display:inline-block;font-size:.78rem;padding:2px 9px;border-radius:99px;background:var(--line);margin:2px 2px 0 0}
+.tag.ok{background:#2E8B5733;color:var(--ok)}.tag.bad{background:#C8412F22;color:var(--bad)}.tag.acc{background:#F2B63244}
+.btn{font:inherit;cursor:pointer;background:var(--pri);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:600}
+.btn.alt{background:var(--acc);color:#12332F}.btn.ghost{background:transparent;color:var(--pri);border:1px solid var(--pri)}.btn.sm{padding:4px 10px;font-size:.85rem}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.tabs button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle}th{color:var(--mut);font-weight:600}
+.wrap{overflow-x:auto}
+form.f{display:grid;gap:12px;max-width:480px}form.f label{display:grid;gap:4px;font-size:.9rem;color:var(--mut)}
+.bar{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--ok)}.bar i.full{background:var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.alert{border-left:5px solid var(--acc);background:var(--card);padding:10px 14px;border-radius:8px;margin-bottom:8px}.alert.bad{border-color:var(--bad)}
+dialog{border:0;border-radius:14px;max-width:460px;width:92%;background:var(--card);color:var(--ink);padding:22px}dialog::backdrop{background:#0008}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;display:none;z-index:9}
+.hero{background:var(--pri);color:#fff;border-radius:16px;padding:26px;margin-bottom:20px}.hero h2{font-size:2rem;margin-bottom:6px}.hero p{margin:0 0 14px;max-width:52ch}
+header{background:var(--card);color:var(--ink);border-bottom:1px solid var(--line);padding:12px 28px;position:sticky;top:0;z-index:5}
+header h1{display:flex;align-items:center;gap:10px;font-size:1.2rem}
+header h1 small{font-weight:400;color:var(--mut);font-size:.8rem;border-left:1px solid var(--line);padding-left:10px}
+.logo{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#1F6F64;font-size:1.1rem}
+.modes{display:flex;gap:4px;align-items:center;background:var(--bg);padding:4px;border-radius:99px;border:1px solid var(--line)}
+.modes button{color:var(--mut);border:0;padding:6px 16px}.modes button.on{background:#1F6F64;color:#fff}
+header select{background:var(--card);color:var(--ink);border-color:var(--line);padding:5px 8px}header option{color:var(--ink)}
+body.pub .tabs{justify-content:center}
+body.int .shell{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 66px)}
+body.int .tabs{flex-direction:column;border-right:1px solid var(--line);border-bottom:0;padding:18px 12px;gap:2px}
+body.int .tabs button{text-align:left;border:0;border-radius:8px;padding:10px 12px}
+body.int .tabs button.on{background:var(--bg);color:var(--pri);box-shadow:inset 3px 0 var(--acc)}
+body.int main{max-width:none;width:100%}
+@media(max-width:760px){body.int .shell{display:block}body.int .tabs{flex-direction:row;border-right:0;border-bottom:1px solid var(--line);padding:8px}}
+.box{box-shadow:0 1px 2px #12332f12}
+.hero{background:linear-gradient(120deg,#1F6F64,#0F4A43);padding:42px 32px}.hero h2{font-size:2.4rem;line-height:1.1}
+.stats{display:flex;gap:30px;flex-wrap:wrap;margin-top:18px}.stats b{font-size:1.6rem;display:block}.stats span{font-size:.85rem;opacity:.85}
+footer{text-align:center;color:var(--mut);padding:30px 20px;font-size:.85rem;border-top:1px solid var(--line);margin-top:30px}body.int footer{display:none}
+.charts{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}.charts h3{margin:0 0 6px}
+.hb{margin:12px 0}.hb .t{display:flex;justify-content:space-between;font-size:.88rem}.hb .tr{position:relative;height:12px;background:var(--line);border-radius:9px;margin-top:4px}.hb .tr i{display:block;height:100%;border-radius:9px;background:#1F6F64}.hb .tr i.bad{background:var(--bad)}.hb .tr u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.dn{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.dn svg{width:140px;height:140px;transform:rotate(-90deg)}.lg div{display:flex;gap:8px;align-items:center;font-size:.88rem}.lg i{width:11px;height:11px;border-radius:3px}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="logo">🐾</span>Casa Patinhas<small>Proteção animal</small></h1>
+  <div class="modes">
+    <button id="mPub" onclick="setMode('pub')">Site público</button>
+    <button id="mInt" onclick="setMode('int')">Área interna</button>
+    <select id="role" aria-label="Perfil de acesso" onchange="render()"><option value="admin">Admin</option><option value="equipe">Equipe</option><option value="vol">Voluntário</option></select>
+  </div>
+</header>
+<div class="shell"><nav class="tabs" id="tabs"></nav>
+<main id="main"></main></div>
+<footer>Casa Patinhas · ONG de proteção animal · Seus dados são tratados conforme a LGPD</footer>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const R=n=>"R$ "+Number(n).toLocaleString("pt-BR",{minimumFractionDigits:2});
+const EM={Cão:"🐶",Gato:"🐱"};
+const SEED={
+ animals:[
+  {id:1,nome:"Thor",esp:"Cão",raca:"SRD",porte:"Grande",idade:"3 anos",sexo:"M",status:"Disponível",espaco:1,lar:null,temper:"Brincalhão e dócil com crianças",saude:"Vacinado e castrado",vet:false},
+  {id:2,nome:"Mel",esp:"Cão",raca:"Poodle",porte:"Pequeno",idade:"7 anos",sexo:"F",status:"Disponível",espaco:2,lar:null,temper:"Calma, gosta de colo",saude:"Cardiopata, usa medicação diária",vet:true},
+  {id:3,nome:"Nina",esp:"Gato",raca:"SRD",porte:"Pequeno",idade:"8 meses",sexo:"F",status:"Em lar temporário",espaco:null,lar:1,temper:"Curiosa e sociável",saude:"Vacinada",vet:false},
+  {id:4,nome:"Bolt",esp:"Cão",raca:"Labrador",porte:"Grande",idade:"2 anos",sexo:"M",status:"Em tratamento",espaco:1,lar:null,temper:"Energético",saude:"Recuperando de cirurgia na pata",vet:true},
+  {id:5,nome:"Luna",esp:"Gato",raca:"Siamês",porte:"Pequeno",idade:"4 anos",sexo:"F",status:"Disponível",espaco:3,lar:null,temper:"Independente e carinhosa",saude:"Castrada",vet:false}],
+ spaces:[{id:1,nome:"Canil A (grandes)",cap:6},{id:2,nome:"Canil B (pequenos)",cap:8},{id:3,nome:"Gatil",cap:10}],
+ lares:[{id:1,nome:"Carla Mendes",porte:"Pequeno",vagas:2,tel:"(11) 98888-0001"},{id:2,nome:"Rafael Souza",porte:"Qualquer",vagas:1,tel:"(11) 97777-0002"}],
+ stock:[{id:1,item:"Ração adulto (kg)",qtd:35,min:50},{id:2,item:"Ração filhote (kg)",qtd:80,min:30},{id:3,item:"Vermífugo (cx)",qtd:3,min:5},{id:4,item:"Areia sanitária (kg)",qtd:40,min:20},{id:5,item:"Antibiótico (cx)",qtd:6,min:4}],
+ contribs:[{id:1,nome:"Ana Lima",tipo:"Mensal",valor:50,dia:5,status:"Ativa",animal:null},{id:2,nome:"Bruno Reis",tipo:"Apadrinhamento",valor:80,dia:15,status:"Ativa",animal:2},{id:3,nome:"Clara Dias",tipo:"Mensal",valor:30,dia:28,status:"Falhou",animal:null}],
+ expenses:[{id:1,desc:"Aluguel",cat:"Fixa",valor:2800},{id:2,desc:"Água e energia",cat:"Fixa",valor:640},{id:3,desc:"Clínica veterinária",cat:"Veterinário",valor:1900},{id:4,desc:"Medicamentos",cat:"Medicação",valor:720}],
+ staff:[{id:1,nome:"Marina Costa",cargo:"Coordenadora",salario:3500},{id:2,nome:"João Pires",cargo:"Tratador",salario:2100}],
+ apps:[{id:1,nome:"Paula Nunes",tarefa:"Passeio com cães",freq:"Semanal",status:"Pendente"},{id:2,nome:"Téo Alves",tarefa:"Eventos de adoção",freq:"Mensal",status:"Aprovado"}],
+ users:[],requests:[]
+};
+let S;try{S=JSON.parse(localStorage.getItem("patinhas")||"null")}catch(e){S=null}
+S=S||JSON.parse(JSON.stringify(SEED));
+const save=()=>{try{localStorage.setItem("patinhas",JSON.stringify(S))}catch(e){}};
+const nid=a=>Math.max(0,...a.map(x=>x.id))+1;
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(t._h);t._h=setTimeout(()=>t.style.display="none",2600)}
+let mode="pub",tab="adocao",today=new Date().toISOString().slice(0,10),filt={esp:"",porte:""};
+const PUB=[["adocao","Adoção"],["contribuir","Contribuir"],["voluntariar","Voluntariado"],["cadastro","Cadastro"]];
+const INT=[["painel","Painel","a,e,v"],["recursos","Recursos","a,e"],["animais","Animais","a,e,v"],["espaco","Espaço físico","a,e"],["lares","Lares temporários","a,e"],["estoque","Estoque","a,e"],["financeiro","Financeiro","a"],["pessoas","Pessoas","a"]];
+function setMode(m){mode=m;tab=m==="pub"?"adocao":"painel";render()}
+const occ=id=>S.animals.filter(a=>a.espaco===id&&a.status!=="Adotado").length;
+const larOcc=id=>S.animals.filter(a=>a.lar===id).length;
+function nextDue(c){const t=new Date(today+"T12:00:00");let d=new Date(t.getFullYear(),t.getMonth(),c.dia,12);if(d<t)d=new Date(t.getFullYear(),t.getMonth()+1,c.dia,12);return d}
+function dueIn(c){return Math.round((nextDue(c)-new Date(today+"T12:00:00"))/864e5)}
+function render(){
+  document.body.className=mode;
+  $("#mPub").className=mode==="pub"?"on":"";$("#mInt").className=mode==="int"?"on":"";
+  const role=$("#role").value[0];$("#role").style.display=mode==="int"?"":"none";
+  const list=mode==="pub"?PUB:INT.filter(t=>t[2].includes(role));
+  if(!list.find(t=>t[0]===tab))tab=list[0][0];
+  $("#tabs").innerHTML=list.map(t=>`<button class="${t[0]===tab?"on":""}" onclick="tab='${t[0]}';render()">${t[1]}</button>`).join("");
+  $("#main").innerHTML=V[tab]();save();
+}
+const V={};
+V.adocao=()=>{
+  const l=S.animals.filter(a=>a.status==="Disponível"&&(!filt.esp||a.esp===filt.esp)&&(!filt.porte||a.porte===filt.porte));
+  return `<div class="hero"><h2>Cada animal merece um lar</h2><p>Adote, apadrinhe ou ajude como voluntário. Cuidamos de cães e gatos resgatados até encontrarem uma família.</p><div class="row" style="margin:0"><button class="btn alt" onclick="tab='contribuir';render()">Contribuir todo mês</button><button class="btn ghost" style="color:#fff;border-color:#fff" onclick="tab='voluntariar';render()">Ser voluntário</button></div><div class="stats"><div><b>${S.animals.filter(a=>a.status!=="Adotado").length}</b><span>animais sob nossos cuidados</span></div><div><b>${S.animals.filter(a=>a.status==="Disponível").length}</b><span>esperando adoção</span></div><div><b>${S.contribs.filter(c=>c.status==="Ativa").length}</b><span>apoiadores mensais</span></div></div></div>
+  <div class="row"><select onchange="filt.esp=this.value;render()" aria-label="Espécie"><option value="">Todas as espécies</option><option ${filt.esp=="Cão"?"selected":""}>Cão</option><option ${filt.esp=="Gato"?"selected":""}>Gato</option></select>
+  <select onchange="filt.porte=this.value;render()" aria-label="Porte"><option value="">Todos os portes</option><option ${filt.porte=="Pequeno"?"selected":""}>Pequeno</option><option ${filt.porte=="Médio"?"selected":""}>Médio</option><option ${filt.porte=="Grande"?"selected":""}>Grande</option></select></div>
+  <div class="grid">${l.map(a=>`<div class="box pet" tabindex="0" onclick="ficha(${a.id})" onkeydown="if(event.key==='Enter')ficha(${a.id})"><div class="ph">${EM[a.esp]}</div><div class="in"><h3>${esc(a.nome)}</h3><span class="tag">${a.raca}</span><span class="tag">${a.porte}</span><span class="tag">${a.idade}</span></div></div>`).join("")||"<p>Nenhum animal encontrado com esses filtros. Tente limpar a busca.</p>"}</div>`};
+function ficha(id){const a=S.animals.find(x=>x.id===id);const d=$("#dlg");
+  d.innerHTML=`<h2>${EM[a.esp]} ${esc(a.nome)}</h2><p>${a.esp} · ${a.raca} · ${a.porte} · ${a.idade} · ${a.sexo==="M"?"Macho":"Fêmea"}</p><p><b>Temperamento:</b> ${esc(a.temper)}</p><p><b>Saúde:</b> ${esc(a.saude)}</p>
+  <form class="f" onsubmit="event.preventDefault();pedir(${id},this)"><label>Seu nome<input name="n" required></label><label>E-mail ou WhatsApp<input name="c" required></label><label>Moradia e rotina (triagem)<textarea name="m" rows="2" required placeholder="Casa ou apartamento? Tem outros animais?"></textarea></label>
+  <div class="row"><button class="btn">Quero adotar</button><button type="button" class="btn alt" onclick="apad(${id})">Apadrinhar</button><button type="button" class="btn ghost" onclick="$('#dlg').close()">Fechar</button></div></form>`;d.showModal()}
+function pedir(id,f){S.requests.push({id:nid(S.requests),animal:id,nome:f.n.value,contato:f.c.value,info:f.m.value});$("#dlg").close();toast("Pedido enviado! Nossa equipe entrará em contato.");render()}
+function apad(id){$("#dlg").close();tab="contribuir";apadId=id;render()}
+let apadId=null;
+V.contribuir=()=>`<h2>Contribuição mensal</h2><p class="sub">Cobrança automática no cartão. Você pode cancelar quando quiser e receberá um lembrete 1 dia antes de cada cobrança.</p>
+ <form class="f box" onsubmit="event.preventDefault();contribuir(this)"><label>Nome<input name="n" required></label>
+ <label>Tipo<select name="t"><option>Mensal</option><option ${apadId?"selected":""}>Apadrinhamento</option></select></label>
+ <label>Animal apadrinhado (opcional)<select name="a"><option value="">Nenhum</option>${S.animals.filter(a=>a.status!=="Adotado").map(a=>`<option value="${a.id}" ${a.id===apadId?"selected":""}>${esc(a.nome)}</option>`).join("")}</select></label>
+ <label>Valor (R$)<input name="v" type="number" min="10" value="40" required></label><label>Dia da cobrança<input name="d" type="number" min="1" max="28" value="10" required></label>
+ <label>Cartão (simulação, nada é armazenado)<input placeholder="0000 0000 0000 0000" inputmode="numeric" required></label><button class="btn alt">Assinar contribuição</button></form>
+ <h3>Contribuições ativas</h3>${tblContrib(true)}`;
+function contribuir(f){S.contribs.push({id:nid(S.contribs),nome:f.n.value,tipo:f.t.value,valor:+f.v.value,dia:+f.d.value,status:"Ativa",animal:f.a.value?+f.a.value:null});apadId=null;toast("Contribuição criada. Obrigado!");render()}
+function tblContrib(pub){return `<div class="wrap"><table><tr><th>Nome</th><th>Tipo</th><th>Valor</th><th>Dia</th><th>Status</th><th>${pub?"":"Próxima cobrança"}</th><th></th></tr>${S.contribs.map(c=>`<tr><td>${esc(c.nome)}</td><td>${c.tipo}${c.animal?" · "+esc(S.animals.find(a=>a.id===c.animal)?.nome||""):""}</td><td>${R(c.valor)}</td><td>${c.dia}</td><td><span class="tag ${c.status==="Ativa"?"ok":"bad"}">${c.status}</span></td><td>${pub?"":nextDue(c).toLocaleDateString("pt-BR")}</td><td>${c.status==="Cancelada"?"":`<button class="btn sm ghost" onclick="cancel(${c.id})">Cancelar</button>`}</td></tr>`).join("")}</table></div>`}
+function cancel(id){S.contribs.find(c=>c.id===id).status="Cancelada";toast("Contribuição cancelada");render()}
+V.voluntariar=()=>`<h2>Seja voluntário</h2><p class="sub">Escolha uma tarefa e a frequência que cabe na sua rotina.</p><form class="f box" onsubmit="event.preventDefault();S.apps.push({id:nid(S.apps),nome:this.n.value,tarefa:this.t.value,freq:this.q.value,status:'Pendente'});toast('Candidatura enviada!');render()">
+ <label>Nome<input name="n" required></label><label>Tarefa<select name="t"><option>Passeio com cães</option><option>Limpeza dos canis</option><option>Eventos de adoção</option><option>Transporte de animais</option><option>Lar temporário</option><option>Divulgação nas redes</option></select></label><label>Frequência<select name="q"><option>Semanal</option><option>Mensal</option></select></label><button class="btn">Enviar candidatura</button></form>`;
+V.cadastro=()=>`<h2>Crie sua conta</h2><p class="sub">Uma conta para doar, adotar e se voluntariar. Seus dados são usados só para o contato da ONG (LGPD).</p><form class="f box" onsubmit="event.preventDefault();S.users.push({nome:this.n.value,email:this.e.value});toast('Cadastro realizado!');this.reset()">
+ <label>Nome completo<input name="n" required></label><label>E-mail<input name="e" type="email" required></label><label>Senha<input type="password" minlength="6" required></label><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" required style="width:auto"> Concordo com o uso dos meus dados</label><button class="btn">Cadastrar</button></form>`;
+V.painel=()=>{
+  const al=[];S.stock.filter(s=>s.qtd<s.min).forEach(s=>al.push(["bad",`Estoque baixo: ${s.item} (${s.qtd} de mínimo ${s.min})`]));
+  S.contribs.filter(c=>c.status==="Ativa"&&dueIn(c)===1).forEach(c=>al.push(["",`Lembrete a enviar: ${c.nome} será cobrado(a) amanhã (${R(c.valor)})`]));
+  S.contribs.filter(c=>c.status==="Falhou").forEach(c=>al.push(["bad",`Cobrança falhou: ${c.nome}`]));
+  S.animals.filter(a=>a.vet&&a.status!=="Adotado").forEach(a=>al.push(["",`Cuidado veterinário: ${a.nome} – ${a.saude}`]));
+  const cap=S.spaces.reduce((s,x)=>s+x.cap,0),oc=S.spaces.reduce((s,x)=>s+occ(x.id),0);
+  const rec=S.contribs.filter(c=>c.status==="Ativa").reduce((s,c)=>s+c.valor,0);
+  const kp=[[S.animals.filter(a=>a.status==="Disponível").length,"para adoção"],[cap-oc,"vagas livres"],[S.lares.reduce((s,l)=>s+l.vagas-larOcc(l.id),0),"vagas em lares temporários"],[R(rec),"contribuições ativas / mês"],[S.requests.length,"pedidos de adoção"]];
+  return `<h2>Painel</h2><p class="sub">Visão geral do dia.</p><div class="grid">${kp.map(k=>`<div class="box kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join("")}</div><h3>Atenção</h3>${al.map(a=>`<div class="alert ${a[0]}">${esc(a[1])}</div>`).join("")||"<p>Tudo em dia.</p>"}
+  ${S.requests.length?`<h3>Pedidos de adoção</h3>${S.requests.map(r=>`<div class="alert">${esc(r.nome)} quer adotar <b>${esc(S.animals.find(a=>a.id===r.animal)?.nome)}</b> · ${esc(r.contato)}<br><small>${esc(r.info)}</small></div>`).join("")}`:""}`};
+const ST=["Disponível","Em tratamento","Em lar temporário","Apadrinhado","Adotado"];
+V.animais=()=>`<h2>Animais</h2><p class="sub">Mudar o status libera ou ocupa vagas automaticamente.</p><div class="wrap"><table><tr><th>Nome</th><th>Espécie / porte</th><th>Saúde</th><th>Status</th><th>Local</th></tr>${S.animals.map(a=>`<tr><td>${EM[a.esp]} ${esc(a.nome)}</td><td>${a.esp} · ${a.porte}</td><td>${a.vet?'<span class="tag bad">Vet</span> ':""}${esc(a.saude)}</td>
+ <td><select onchange="setSt(${a.id},this.value)">${ST.map(s=>`<option ${s===a.status?"selected":""}>${s}</option>`).join("")}</select></td><td>${a.lar?"Lar: "+esc(S.lares.find(l=>l.id===a.lar)?.nome):a.espaco?esc(S.spaces.find(s=>s.id===a.espaco)?.nome):"—"}</td></tr>`).join("")}</table></div>
+ <h3>Novo animal</h3><form class="f box" onsubmit="event.preventDefault();addAn(this)"><label>Nome<input name="n" required></label><label>Espécie<select name="e"><option>Cão</option><option>Gato</option></select></label><label>Porte<select name="p"><option>Pequeno</option><option>Médio</option><option>Grande</option></select></label><label>Raça<input name="r" value="SRD"></label><label>Idade<input name="i" placeholder="2 anos"></label><label>Espaço<select name="s">${S.spaces.map(s=>`<option value="${s.id}">${esc(s.nome)}</option>`).join("")}</select></label><button class="btn">Cadastrar animal</button></form>`;
+function setSt(id,s){const a=S.animals.find(x=>x.id===id);a.status=s;if(s==="Adotado"){a.espaco=null;a.lar=null}
+  if(s==="Em lar temporário"&&!a.lar){const l=S.lares.find(l=>l.vagas>larOcc(l.id));if(l){a.lar=l.id;a.espaco=null}else toast("Nenhum lar temporário com vaga")}
+  if(s==="Disponível"&&!a.espaco){a.lar=null;const sp=S.spaces.find(x=>occ(x.id)<x.cap);a.espaco=sp?sp.id:null}render()}
+function addAn(f){const sp=S.spaces.find(s=>s.id==f.s.value);if(occ(sp.id)>=sp.cap){toast("Esse espaço está lotado. Escolha outro.");return}
+  S.animals.push({id:nid(S.animals),nome:f.n.value,esp:f.e.value,raca:f.r.value,porte:f.p.value,idade:f.i.value||"—",sexo:"M",status:"Em tratamento",espaco:sp.id,lar:null,temper:"A avaliar",saude:"Em avaliação",vet:true});toast("Animal cadastrado");render()}
+V.espaco=()=>`<h2>Espaço físico</h2><p class="sub">Vagas livres calculadas pela ocupação atual.</p><div class="grid">${S.spaces.map(s=>{const o=occ(s.id),p=Math.round(o/s.cap*100);return `<div class="box"><h3 style="margin:0">${esc(s.nome)}</h3><div class="bar"><i class="${p>=100?"full":""}" style="width:${p}%"></i></div><b>${s.cap-o} vagas livres</b> <span class="sub">(${o}/${s.cap})</span><br><small>${S.animals.filter(a=>a.espaco===s.id).map(a=>esc(a.nome)).join(", ")||"Vazio"}</small></div>`}).join("")}</div>`;
+V.lares=()=>`<h2>Lares temporários</h2><p class="sub">Voluntários disponíveis e animais alocados.</p><div class="grid">${S.lares.map(l=>{const o=larOcc(l.id);return `<div class="box"><h3 style="margin:0">${esc(l.nome)}</h3><small>${l.tel} · aceita porte: ${l.porte}</small><p><span class="tag ${l.vagas-o>0?"ok":"bad"}">${l.vagas-o} de ${l.vagas} vagas</span></p>${S.animals.filter(a=>a.lar===l.id).map(a=>`<div>${EM[a.esp]} ${esc(a.nome)}</div>`).join("")||"<small>Nenhum animal alocado</small>"}</div>`}).join("")}</div>
+ <h3>Cadastrar lar</h3><form class="f box" onsubmit="event.preventDefault();S.lares.push({id:nid(S.lares),nome:this.n.value,porte:this.p.value,vagas:+this.v.value,tel:this.t.value});render()"><label>Nome<input name="n" required></label><label>Telefone<input name="t" required></label><label>Porte aceito<select name="p"><option>Pequeno</option><option>Médio</option><option>Grande</option><option>Qualquer</option></select></label><label>Vagas<input name="v" type="number" min="1" value="1"></label><button class="btn">Adicionar</button></form>`;
+V.estoque=()=>`<h2>Estoque</h2><p class="sub">Alerta quando a quantidade fica abaixo do mínimo.</p><div class="wrap"><table><tr><th>Item</th><th>Quantidade</th><th>Mínimo</th><th></th></tr>${S.stock.map(s=>`<tr><td>${esc(s.item)}</td><td>${s.qtd} ${s.qtd<s.min?'<span class="tag bad">Repor</span>':""}</td><td>${s.min}</td><td><button class="btn sm ghost" onclick="mv(${s.id},-5)">− Saída 5</button> <button class="btn sm" onclick="mv(${s.id},5)">+ Entrada 5</button></td></tr>`).join("")}</table></div>
+ <h3>Novo item</h3><form class="f box" onsubmit="event.preventDefault();S.stock.push({id:nid(S.stock),item:this.i.value,qtd:+this.q.value,min:+this.m.value});render()"><label>Item<input name="i" required></label><label>Quantidade<input name="q" type="number" value="0"></label><label>Mínimo<input name="m" type="number" value="5"></label><button class="btn">Adicionar</button></form>`;
+function mv(id,n){const s=S.stock.find(x=>x.id===id);s.qtd=Math.max(0,s.qtd+n);render()}
+V.financeiro=()=>{const rec=S.contribs.filter(c=>c.status==="Ativa").reduce((s,c)=>s+c.valor,0),des=S.expenses.reduce((s,e)=>s+e.valor,0),fol=S.staff.reduce((s,e)=>s+e.salario,0);
+ return `<h2>Financeiro</h2><p class="sub">Contribuições recorrentes, despesas e folha.</p><div class="grid"><div class="box kpi"><b>${R(rec)}</b><span>entrada mensal</span></div><div class="box kpi"><b>${R(des+fol)}</b><span>saídas (despesas + folha)</span></div><div class="box kpi"><b style="color:${rec-des-fol>=0?"var(--ok)":"var(--bad)"}">${R(rec-des-fol)}</b><span>saldo mensal</span></div></div>
+ <div class="row" style="margin-top:18px"><label>Data de hoje (simule para testar o lembrete de 1 dia) <input type="date" value="${today}" onchange="today=this.value;render()"></label></div>
+ ${S.contribs.filter(c=>c.status==="Ativa"&&dueIn(c)===1).map(c=>`<div class="alert">📩 Lembrete enviado a ${esc(c.nome)}: cobrança de ${R(c.valor)} amanhã.</div>`).join("")}
+ <h3>Contribuições</h3>${tblContrib(false)}
+ <h3>Despesas do mês</h3><div class="wrap"><table>${S.expenses.map(e=>`<tr><td>${esc(e.desc)}</td><td>${e.cat}</td><td>${R(e.valor)}</td></tr>`).join("")}</table></div>
+ <form class="row" style="margin-top:10px" onsubmit="event.preventDefault();S.expenses.push({id:nid(S.expenses),desc:this.d.value,cat:this.c.value,valor:+this.v.value});render()"><input name="d" placeholder="Descrição" required><select name="c"><option>Fixa</option><option>Veterinário</option><option>Medicação</option><option>Outra</option></select><input name="v" type="number" step="0.01" placeholder="Valor" required><button class="btn">Lançar despesa</button></form>`};
+V.pessoas=()=>`<h2>Pessoas</h2><p class="sub">Funcionários e candidaturas de voluntários.</p><h3>Funcionários</h3><div class="wrap"><table><tr><th>Nome</th><th>Cargo</th><th>Salário</th></tr>${S.staff.map(p=>`<tr><td>${esc(p.nome)}</td><td>${esc(p.cargo)}</td><td>${R(p.salario)}</td></tr>`).join("")}</table></div>
+ <h3>Candidaturas de voluntariado</h3><div class="wrap"><table><tr><th>Nome</th><th>Tarefa</th><th>Frequência</th><th>Status</th><th></th></tr>${S.apps.map(a=>`<tr><td>${esc(a.nome)}</td><td>${a.tarefa}</td><td>${a.freq}</td><td><span class="tag ${a.status==="Aprovado"?"ok":"acc"}">${a.status}</span></td><td>${a.status==="Pendente"?`<button class="btn sm" onclick="S.apps.find(x=>x.id===${a.id}).status='Aprovado';render()">Aprovar</button>`:""}</td></tr>`).join("")}</table></div>`;
+const hb=(l,v,max,m,txt,bad)=>`<div class="hb"><div class="t"><span>${esc(l)}</span><span>${txt}</span></div><div class="tr"><i class="${bad?"bad":""}" style="width:${Math.min(100,v/max*100)}%"></i>${m?`<u style="left:${Math.min(100,m/max*100)}%" title="Mínimo"></u>`:""}</div></div>`;
+const dn=P=>{const T=P.reduce((s,p)=>s+p.v,0)||1;let o=0;return `<div class="dn"><svg viewBox="0 0 36 36" role="img" aria-label="Gráfico de rosca">${P.map(p=>{const d=p.v/T*100,e=`<circle cx="18" cy="18" r="15.9155" fill="none" stroke="${p.c}" stroke-width="5" stroke-dasharray="${d} ${100-d}" stroke-dashoffset="${-o}"/>`;o+=d;return e}).join("")}</svg><div class="lg">${P.map(p=>`<div><i style="background:${p.c}"></i>${esc(p.l)}: <b>${p.t}</b></div>`).join("")}</div></div>`};
+V.recursos=()=>{const pal=["#1F6F64","#F2B632","#3B7DD8","#C8412F","#8E6BBF"],adm=$("#role").value==="admin";
+ const low=S.stock.filter(s=>s.qtd<s.min).length,cap=S.spaces.reduce((s,x)=>s+x.cap,0),oc=S.spaces.reduce((s,x)=>s+occ(x.id),0);
+ let h=`<h2>Recursos</h2><p class="sub">${low?`${low} item(ns) abaixo do mínimo · `:"Estoque em dia · "}${cap-oc} vagas livres nos espaços</p><div class="charts">`;
+ h+=`<div class="box"><h3>Estoque</h3><small>A barra mostra a quantidade e o traço preto, o mínimo. Vermelho pede reposição.</small>${S.stock.map(s=>hb(s.item,s.qtd,Math.max(s.qtd,s.min)*1.25,s.min,`${s.qtd} / mín. ${s.min}`,s.qtd<s.min)).join("")}</div>`;
+ h+=`<div class="box"><h3>Espaço e lares temporários</h3><small>Ocupação atual. Vermelho indica lotação.</small>${S.spaces.map(x=>hb(x.nome,occ(x.id),x.cap,0,`${occ(x.id)}/${x.cap}`,occ(x.id)>=x.cap)).join("")}${S.lares.map(l=>hb("Lar: "+l.nome,larOcc(l.id),l.vagas,0,`${larOcc(l.id)}/${l.vagas}`,larOcc(l.id)>=l.vagas)).join("")}</div>`;
+ h+=`<div class="box"><h3>Animais por status</h3>${dn(ST.map((s,i)=>({l:s,v:S.animals.filter(a=>a.status===s).length,c:pal[i],t:S.animals.filter(a=>a.status===s).length})).filter(p=>p.v))}</div>`;
+ if(adm){const rec=S.contribs.filter(c=>c.status==="Ativa").reduce((s,c)=>s+c.valor,0),fol=S.staff.reduce((s,e)=>s+e.salario,0),cats={};S.expenses.forEach(e=>cats[e.cat]=(cats[e.cat]||0)+e.valor);
+  const P=[...Object.entries(cats).map(([k,v])=>({l:k,v,t:R(v)})),{l:"Folha",v:fol,t:R(fol)}].map((p,i)=>({...p,c:pal[i%5]})),tot=P.reduce((s,p)=>s+p.v,0),mx=Math.max(rec,tot);
+  h+=`<div class="box"><h3>Entradas x saídas do mês</h3>${hb("Entradas (contribuições)",rec,mx,0,R(rec))}${hb("Saídas (despesas + folha)",tot,mx,0,R(tot),tot>rec)}<h3 style="margin-top:18px">Para onde vai o dinheiro</h3>${dn(P)}</div>`}
+ return h+"</div>"};
+render();
+</script>
+</body>
+</html>
